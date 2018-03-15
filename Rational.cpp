@@ -37,6 +37,12 @@ Rational Rational::operator-(const Rational &num)
     out.simplify(); return out;
 }
 
+Rational Rational::operator%(const Rational &num)
+{
+    Rational out(N*num.D % num.N*D, D*num.D);
+    out.simplify(); return out;
+}
+
 Rational Rational::operator*(const Rational &num)
 {
     Rational out(N*num.N, D*num.D);
@@ -46,12 +52,6 @@ Rational Rational::operator*(const Rational &num)
 Rational Rational::operator/(const Rational &num)
 {
     Rational out(N*num.D, D*num.N);
-    out.simplify(); return out;
-}
-
-Rational Rational::operator%(const Rational &num)
-{
-    Rational out(N*num.D % num.N*D, D*num.D);
     out.simplify(); return out;
 }
 
@@ -75,6 +75,15 @@ void Rational::operator-=(const Rational &num)
     simplify();
 }
 
+void Rational::operator%=(const Rational &num)
+{
+    N *= num.D;
+    N %= num.N*D;
+    D *= num.D;
+
+    simplify();
+}
+
 void Rational::operator*=(const Rational &num)
 {
     N *= num.N;
@@ -87,15 +96,6 @@ void Rational::operator/=(const Rational &num)
 {
     N *= num.D;
     D *= num.N;
-
-    simplify();
-}
-
-void Rational::operator%=(const Rational &num)
-{
-    N *= num.D;
-    N -= num.N*D;
-    D *= num.D;
 
     simplify();
 }
