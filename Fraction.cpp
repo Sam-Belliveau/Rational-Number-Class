@@ -12,7 +12,7 @@ _Fract::_Fract(Whole topNum, Whole bottomNum)
 
 /** Casts **/
 
-_Fract::operator Whole(){ return N/D; }
+_Fract::operator Whole() { return N/D; }
 _Fract::operator double(){ return ((double)N)/((double)D); }
 
 /** Operators **/
@@ -129,6 +129,8 @@ void _Fract::setFloat(const double num)
 void _Fract::simplify()
 {
     if(D < 0){ D = -D; N = -N; } /// Numerator is what holds the sign
+    if(D == 0){ D = 1; }
+
     const Whole factor = GCD((N < 0) ? -N : N, D);
     N /= factor; D /= factor;
 }
