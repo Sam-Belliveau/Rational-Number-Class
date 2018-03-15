@@ -5,7 +5,7 @@
     +, -, *, /, %, +=, -=, *=, /=, %=, ==, >, <, >=, <=, = (int), = (double)
     
 ## The goal behind this project
-###   - Clean/Readable Code
-###   - Fast Code
-###   - Intuitive Usability
-###   - Following the standerd
+##### - Clean/Readable Code
+##### - Fast Code
+##### - Intuitive Usability
+##### - Following the standerd
