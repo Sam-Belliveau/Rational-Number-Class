@@ -1,2 +1,11 @@
-# Rational-Number-Class
-This is a class that I made that is a plug and play version of a rational number library
+# Rational Number Class
+
+## Operators so far:
+
+    +, -, *, /, %, +=, -=, *=, /=, %=, ==, >, <, >=, <=, = (int), = (double)
+    
+## The goal behind this project
+###   - Clean/Readable Code
+###   - Fast Code
+###   - Intuitive Usability
+###   - Following the standerd
