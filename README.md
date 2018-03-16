@@ -5,6 +5,8 @@ Operators so far:
 -----------------
 
 +, -, *, /, %, +=, -=, *=, /=, %=, ==, >, <, >=, <=, =
+
+__NOTE:__ _This can natively cast to (long long int) and (double)_
     
 The goal behind this project
 ----------------------------
@@ -40,6 +42,5 @@ Setting a Fraction Using:
 
 `_Fract c = (_Fract)9 / (_Fract)4;` __c = 9/4.__  _Because it is in a native format, no data is lost_
 #
-__NOTE:__ 
-_These problems are not caused by the \_Fract class, but are caused by the way floats and integers natively divide in C++. \_Fract just reads what C++ Calculates. Except for the last example, because it is handled by \_Fract, so it is lossless._
+__NOTE:__  _These problems are not caused by the \_Fract class, but are caused by the way floats and integers natively divide in C++. \_Fract just reads what C++ Calculates. Except for the last example, because it is handled by \_Fract, so it is lossless._
 #
