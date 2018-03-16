@@ -1,6 +1,4 @@
 typedef long Whole; /// Change this to what ever you want
-
-/// This is how much detail is considered when reading floats
 const Whole FLOAT_READING_PRECISION = 10000;
 
 #ifndef FRACTION_H
@@ -9,7 +7,6 @@ const Whole FLOAT_READING_PRECISION = 10000;
 class _Fract
 {
     public:
-
         /***** THESE ARE THE ONLY VARS IN THE CLASS *****/
         Whole N = 0;
         Whole D = 1;
@@ -33,15 +30,11 @@ class _Fract
         _Fract operator*(const _Fract &num);
         _Fract operator/(const _Fract &num);
         _Fract operator%(const _Fract &num);
-
-        // Self Modifying
         void operator+=(const _Fract &num);
         void operator-=(const _Fract &num);
         void operator*=(const _Fract &num);
         void operator/=(const _Fract &num);
         void operator%=(const _Fract &num);
-
-        // Comparison
         bool operator==(const _Fract &b);
         bool operator> (const _Fract &b);
         bool operator< (const _Fract &b);
@@ -49,7 +42,6 @@ class _Fract
         bool operator<=(const _Fract &b);
 
     private:
-
         /** Background work **/
         Whole GCD(const Whole a, const Whole b);
         void setFloat(const double num);

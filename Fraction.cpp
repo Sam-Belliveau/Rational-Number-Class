@@ -8,7 +8,7 @@ _Fract::_Fract(const double num)
 { setFloat(num); }
 
 _Fract::_Fract(Whole topNum, Whole bottomNum)
-{ N = topNum; D = bottomNum; }
+{ N = topNum; D = bottomNum; simplify(); }
 
 /** Casts **/
 
@@ -17,84 +17,35 @@ _Fract::operator double(){ return ((double)N)/((double)D); }
 
 /** Operators **/
 
-// Normal
-
 _Fract _Fract::operator+(const _Fract &num)
-{
-    _Fract out(N*num.D + num.N*D, D*num.D);
-    out.simplify(); return out;
-}
+{ return _Fract(N*num.D + num.N*D, D*num.D); }
 
 _Fract _Fract::operator-(const _Fract &num)
-{
-    _Fract out(N*num.D - num.N*D, D*num.D);
-    out.simplify(); return out;
-}
+{ return _Fract(N*num.D - num.N*D, D*num.D); }
 
 _Fract _Fract::operator*(const _Fract &num)
-{
-    _Fract out(N*num.N, D*num.D);
-    out.simplify(); return out;
-}
+{ return _Fract(N*num.N, D*num.D); }
 
 _Fract _Fract::operator/(const _Fract &num)
-{
-    _Fract out(N*num.D, D*num.N);
-    out.simplify(); return out;
-}
+{ return _Fract(N*num.D, D*num.N); }
 
 _Fract _Fract::operator%(const _Fract &num)
-{
-    _Fract out(N*num.D % num.N*D, D*num.D);
-    out.simplify(); return out;
-}
-
-// Self Modifying
+{ return _Fract(N*num.D % num.N*D, D*num.D); }
 
 void _Fract::operator+=(const _Fract &num)
-{
-    N *= num.D;
-    N += num.N*D;
-    D *= num.D;
-
-    simplify();
-}
+{ N = N*num.D + D*num.N; D *= num.D; simplify(); }
 
 void _Fract::operator-=(const _Fract &num)
-{
-    N *= num.D;
-    N -= num.N*D;
-    D *= num.D;
-
-    simplify();
-}
+{ N = N*num.D - D*num.N; D *= num.D; simplify(); }
 
 void _Fract::operator%=(const _Fract &num)
-{
-    N *= num.D;
-    N %= num.N*D;
-    D *= num.D;
-
-    simplify();
-}
+{ N = N*num.D % D*num.N; D *= num.D; simplify(); }
 
 void _Fract::operator*=(const _Fract &num)
-{
-    N *= num.N;
-    D *= num.D;
-
-    simplify();
-}
+{ N *= num.N; D *= num.D; simplify(); }
 
 void _Fract::operator/=(const _Fract &num)
-{
-    N *= num.D;
-    D *= num.N;
-
-    simplify();
-}
-
-// Comparison
+{ N *= num.D; D *= num.N; simplify(); }
 
 bool _Fract::operator==(const _Fract &b)
 { return (N*b.D == b.N*D); }
