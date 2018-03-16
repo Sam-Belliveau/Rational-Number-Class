@@ -71,7 +71,7 @@ void _Fract::setFloat(const double num)
 {
     if((double)(Whole)num == num) { N = (Whole)num; D = 1; return; }
 
-    N = (Whole)(num * FLOAT_READING_PRECISION); /// 0.5 makes the cast round
+    N = (Whole)(num * FLOAT_READING_PRECISION + 0.5); /// 0.5 makes the cast round
     D = FLOAT_READING_PRECISION; /// The Precision Multiplier is simplified
 
     simplify();
