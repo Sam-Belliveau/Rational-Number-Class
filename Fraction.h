@@ -19,8 +19,7 @@ class _Fract
         /** Casts **/
         operator Whole();
         operator double();
-        // I know your not supposed to define in a header
-        _Fract& operator=(const double num){ setFloat(num); }
+        void operator=(const double num){ setFloat(num); }
 
         /** Operators **/
 
