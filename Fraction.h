@@ -22,8 +22,6 @@ class _Fract
         void operator=(const double num){ setFloat(num); }
 
         /** Operators **/
-
-        // Normal
         _Fract operator+(const _Fract &num);
         _Fract operator-(const _Fract &num);
         _Fract operator*(const _Fract &num);
