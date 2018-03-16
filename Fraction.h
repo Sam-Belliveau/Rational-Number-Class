@@ -30,16 +30,16 @@ class _Fract
         _Fract operator*(const _Fract &num);
         _Fract operator/(const _Fract &num);
         _Fract operator%(const _Fract &num);
-        void operator+=(const _Fract &num);
-        void operator-=(const _Fract &num);
-        void operator*=(const _Fract &num);
-        void operator/=(const _Fract &num);
-        void operator%=(const _Fract &num);
-        bool operator==(const _Fract &b);
-        bool operator> (const _Fract &b);
-        bool operator< (const _Fract &b);
-        bool operator>=(const _Fract &b);
-        bool operator<=(const _Fract &b);
+        void operator+= (const _Fract &num);
+        void operator-= (const _Fract &num);
+        void operator*= (const _Fract &num);
+        void operator/= (const _Fract &num);
+        void operator%= (const _Fract &num);
+        bool operator== (const _Fract &b);
+        bool operator>  (const _Fract &b);
+        bool operator<  (const _Fract &b);
+        bool operator>= (const _Fract &b);
+        bool operator<= (const _Fract &b);
 
     private:
         /** Background work **/
