@@ -16,29 +16,29 @@ The goal behind this project
 
 Setting a Fraction Using:
 -------------------------
-1. Integers:
+1. __Integers:__
 
-`_Fract a = 1/3;` a = 0/1.  Integers round down when dividing
+`_Fract a = 1/3;` __a = 0/1.__  _Integers round down when dividing_
 
-`_Fract b = 8/4;` b = 2/1.  It goes in perfectly
+`_Fract b = 8/4;` __b = 2/1.__  _It goes in perfectly_
 
-`_Fract c = 9/4;` c = 2/1.  The integer is rounded down
+`_Fract c = 9/4;` __c = 2/1.__  _The integer is rounded down_
 
-2. Floats:
+2. __Floats:__
 
-`_Fract a = (double)1 / (double)3;` a = 3333/10000.  Floats can't represent 1/3 perfectly
+`_Fract a = (double)1 / (double)3;` __a = 3333/10000.__  _Floats can't represent 1/3 perfectly_
 
-`_Fract b = (double)8 / (double)4;` b = 2/1.         It goes in perfectly
+`_Fract b = (double)8 / (double)4;` __b = 2/1.__         _It goes in perfectly_
 
-`_Fract c = (double)9 / (double)4;` c = 9/4.         4 is a power of 2, so floats can represent it no problem
+`_Fract c = (double)9 / (double)4;` __c = 9/4.__         _4 is a power of 2, so floats can represent it no problem_
 
-3. \_Fract:
+3. __\_Fract:__
 
-`_Fract a = (_Fract)1 / (_Fract)3;` a = 1/3.  Because it is in a native format, no data is lost
+`_Fract a = (_Fract)1 / (_Fract)3;` __a = 1/3.__  _Because it is in a native format, no data is lost_
 
-`_Fract b = (_Fract)8 / (_Fract)4;` b = 2/1.  Because it is in a native format, no data is lost
+`_Fract b = (_Fract)8 / (_Fract)4;` __b = 2/1.__  _Because it is in a native format, no data is lost_
 
-`_Fract c = (_Fract)9 / (_Fract)4;` c = 9/4.  Because it is in a native format, no data is lost
+`_Fract c = (_Fract)9 / (_Fract)4;` __c = 9/4.__  _Because it is in a native format, no data is lost_
 
 __NOTE:__ 
 _These problems are not caused by the \_Fract class, but because of the way floats and integers natively divide. \_Fract just reads what C++ outputs. Except for the last example, because it is handled by \_Fract, so it is lossless._
