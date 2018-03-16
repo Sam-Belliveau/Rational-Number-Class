@@ -1,4 +1,4 @@
-typedef long Whole; /// Change this to what ever you want
+typedef long long Whole; /// Change this to what ever you want
 const Whole FLOAT_READING_PRECISION = 10000;
 
 #ifndef FRACTION_H
