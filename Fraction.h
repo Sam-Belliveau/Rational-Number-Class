@@ -166,11 +166,11 @@ class Fract
 
         /// Small enough to avoid overflows,
         /// enough factors to get good results
-        const TYPE TheHolyGrail = 0x13B0; // does not need to be in hex, I just look like a hacker
+        const TYPE AntiPrime = 5040
         void setFloat(FPC num)
         {
-            N = (TYPE)(num * TheHolyGrail + 0.5); /// 0.5 makes the cast round
-            D = TheHolyGrail;
+            N = (TYPE)(num * AntiPrime + 0.5); /// 0.5 makes the cast round
+            D = AntiPrime;
             simplify();
         }
 };
