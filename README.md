@@ -34,8 +34,8 @@ Setting a Fraction Using:
 
 3. __Fract:__
 
-`Fract<long> a = (_Fract)1 / (_Fract)3;` __a = 1/3.__ _Because it is in a native format, no data is lost_
+`Fract<long> a = (Fract<long>)1 / (Fract<long>)3;` __a = 1/3.__ _Because it is in a native format, no data is lost_
 
-`Fract<long> b = (_Fract)8 / (_Fract)4;` __b = 2/1.__ _Because it is in a native format, no data is lost_
+`Fract<long> b = (Fract<long>)8 / (Fract<long>)4;` __b = 2/1.__ _Because it is in a native format, no data is lost_
 
-`Fract<long> c = (_Fract)9 / (_Fract)4;` __c = 9/4.__ _Because it is in a native format, no data is lost_
+`Fract<long> c = (Fract<long>)9 / (Fract<long>)4;` __c = 9/4.__ _Because it is in a native format, no data is lost_
