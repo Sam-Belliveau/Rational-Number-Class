@@ -1,0 +1,3 @@
+- Anyone can contribute
+- You must follow the rules in README.md, I mean if you dont, its now sepearate from the project. __(STILL GOT TO KEEP THAT COPYRIGHT NOTICE)__
+- You must know C++, but also a significant amount of low level C to make optimizations.
