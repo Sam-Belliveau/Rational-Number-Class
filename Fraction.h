@@ -42,8 +42,6 @@ class Fract
         Fract(const float num)       { setFloat(num); }
 
         /** Casts **/
-        operator char()             const { return N/D; }
-        operator short()            const { return N/D; }
         operator int()              const { return N/D; }
         operator long int()         const { return N/D; }
         operator long long int()    const { return N/D; }
@@ -56,8 +54,6 @@ class Fract
         void operator=(const double num)        { setFloat(num); }
         void operator=(const float num)         { setFloat(num); }
 
-        void operator=(const char num)      { N = (TYPE)num; D = 1; }
-        void operator=(const short num)     { N = (TYPE)num; D = 1; }
         void operator=(const int num)       { N = (TYPE)num; D = 1; }
         void operator=(const long int num)  { N = (TYPE)num; D = 1; }
         void operator=(const long long num) { N = (TYPE)num; D = 1; }
