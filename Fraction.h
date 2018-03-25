@@ -21,6 +21,16 @@
  * SOFTWARE.
  */
 
+/*
+    TEMPLATE SUPPORT:
+    char    (Not Recomended)    Because of overflow caused when using a double
+    short   (Not Recomended)    Because of overflow caused when using a double to a lesser extent
+    long    (Recomended)        This is the perfect size being 32 bits, you get a 64 bit data type
+    long long   (Recomended)    This is 64bit so the risk of an overflow is very small, but you do have a 128 bit data type
+    
+    ANY FLOAT IS NOT SUPPORTED BECAUSE THEY DO NOT HAVE THE MODULAR FUNCTION, THAT IS THE ONLY REASON.
+ */
+
 typedef long double FPC; /// floating point calculator
 
 #ifndef FRACTION_H
@@ -38,9 +48,12 @@ class Fract
         Fract(TYPE topNum, TYPE bottomNum) : N{topNum}, D{bottomNum} {}
 
         Fract(const long double num) { setFloat(num); }
+        Fract(const long long num)   { N = (TYPE)num; D = 1; }
+        Fract(const long int num)    { N = (TYPE)num; D = 1; }
         Fract(const double num)      { setFloat(num); }
         Fract(const float num)       { setFloat(num); }
-
+        Fract(const int num)         { N = (TYPE)num; D = 1; }
+    
         /** Casts **/
         operator int()              const { return N/D; }
         operator long int()         const { return N/D; }
@@ -51,12 +64,11 @@ class Fract
         operator float()        const { return ((float)N)/((float)D); }
 
         void operator=(const long double num)   { setFloat(num); }
+        void operator=(const long long num)     { N = (TYPE)num; D = 1; }
+        void operator=(const long int num)      { N = (TYPE)num; D = 1; }
         void operator=(const double num)        { setFloat(num); }
         void operator=(const float num)         { setFloat(num); }
-
-        void operator=(const int num)       { N = (TYPE)num; D = 1; }
-        void operator=(const long int num)  { N = (TYPE)num; D = 1; }
-        void operator=(const long long num) { N = (TYPE)num; D = 1; }
+        void operator=(const int num)           { N = (TYPE)num; D = 1; }
 
         /** Operators **/
         Fract& operator++()
