@@ -71,80 +71,53 @@ class Fract
         Fract operator--(int)
         { Fract<TYPE> temp(*this); operator--(); return temp; }
 
-
         Fract& operator+=(const Fract<TYPE> &b)
-        {
-            N = N*b.D + D*b.N;
-            D *= b.D;
-            simplify();
-            return *this;
-        }
+        { N = N*b.D + D*b.N; D *= b.D; simplify(); return *this; }
 
         friend Fract operator+(Fract<TYPE> a, const Fract<TYPE> &b)
         { a += b; return a; }
 
         Fract& operator-=(const Fract<TYPE> &b)
-        {
-            N = N*b.D - D*b.N;
-            D *= b.D;
-            simplify();
-            return *this;
-        }
+        { N = N*b.D - D*b.N; D *= b.D; simplify(); return *this; }
 
         friend Fract operator-(Fract<TYPE> a, const Fract<TYPE> &b)
         { a -= b; return a; }
 
         Fract& operator%=(const Fract<TYPE> &b)
-        {
-            N = N*b.D % D*b.N;
-            D *= b.D;
-            simplify();
-            return *this;
-        }
+        { N = N*b.D % D*b.N; D *= b.D; simplify(); return *this; }
 
         friend Fract operator%(Fract<TYPE> a, const Fract<TYPE> &b)
         { a %= b; return a; }
 
         Fract& operator*=(const Fract<TYPE> &b)
-        {
-            N *= b.N;
-            D *= b.D;
-            simplify();
-            return *this;
-        }
+        { N *= b.N; D *= b.D; simplify(); return *this; }
 
         friend Fract operator*(Fract<TYPE> a, const Fract<TYPE> &b)
         { a *= b; return a; }
 
         Fract& operator/=(const Fract<TYPE> &b)
-        {
-            N *= b.D;
-            D *= b.N;
-            simplify();
-            return *this;
-        }
+        { N *= b.D; D *= b.N; simplify(); return *this; }
 
         friend Fract operator/(Fract<TYPE> a, const Fract<TYPE> &b)
         { a /= b; return a; }
 
-
         friend bool operator< (const Fract<TYPE> &a, const Fract<TYPE> &b)
         { return (a.N*b.D < a.D*b.N); }
-        /**/
-        /**/friend bool operator>=(const Fract<TYPE> &a, const Fract<TYPE> &b)
-        /**/{ return !(a < b); }
-        /**/
-        /**/friend bool operator> (const Fract<TYPE> &a, const Fract<TYPE> &b)
-        /**/{ return (b < a); }
-        /******/
-        /******/friend bool operator<=(const Fract<TYPE> &a, const Fract<TYPE> &b)
-        /******/{ return !(a > b); }
+        
+        friend bool operator>=(const Fract<TYPE> &a, const Fract<TYPE> &b)
+        { return !(a < b); }
+        
+        friend bool operator> (const Fract<TYPE> &a, const Fract<TYPE> &b)
+        { return (b < a); }
+        
+        friend bool operator<=(const Fract<TYPE> &a, const Fract<TYPE> &b)
+        { return !(a > b); }
 
         friend bool operator==(const Fract<TYPE> &a, const Fract<TYPE> &b)
         { return (a.N*b.D == a.D*b.N); }
-        /**/
-        /**/friend bool operator!=(const Fract<TYPE> &a, const Fract<TYPE> &b)
-        /**/{ return !(a == b); }
+        
+        friend bool operator!=(const Fract<TYPE> &a, const Fract<TYPE> &b)
+        { return !(a == b); }
 
     private:
         /** Background work **/
