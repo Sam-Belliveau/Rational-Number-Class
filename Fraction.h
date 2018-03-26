@@ -139,7 +139,7 @@ class Fract
     private:
         /** Background work **/
         inline TYPE GCD(const TYPE a, const TYPE b)
-        { return b ? GCD(b, a%b) : a; }
+        { return (b == 0) ? a : GCD(b, a%b); }
 
         void simplify()
         {
