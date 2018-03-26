@@ -8,10 +8,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,7 +27,7 @@
     short   (Not Recomended)    Because of overflow caused when using a double to a lesser extent
     long    (Recomended)        This is the perfect size being 32 bits, you get a 64 bit data type
     long long   (Recomended)    This is 64bit so the risk of an overflow is very small, but you do have a 128 bit data type
-    
+
     ANY FLOAT IS NOT SUPPORTED BECAUSE THEY DO NOT HAVE THE MODULAR FUNCTION, THAT IS THE ONLY REASON.
  */
 
@@ -47,28 +47,33 @@ class Fract
         /** Constructors **/
         Fract(TYPE topNum, TYPE bottomNum) : N{topNum}, D{bottomNum} {}
 
-        Fract(const long double num) { setFloat(num); }
-        Fract(const long long num)   { N = (TYPE)num; D = 1; }
-        Fract(const long int num)    { N = (TYPE)num; D = 1; }
-        Fract(const double num)      { setFloat(num); }
-        Fract(const float num)       { setFloat(num); }
-        Fract(const int num)         { N = (TYPE)num; D = 1; }
-    
-        /** Casts **/
-        operator int()              const { return N/D; }
-        operator long int()         const { return N/D; }
-        operator long long int()    const { return N/D; }
+        Fract(const long double num)    { setFloat(num); }
+        Fract(const double num)         { setFloat(num); }
+        Fract(const float num)          { setFloat(num); }
 
-        operator long double()  const { return ((long double)N)/((long double)D); }
-        operator double()       const { return ((double)N)/((double)D); }
-        operator float()        const { return ((float)N)/((float)D); }
+        Fract(const long long int num)  { N = (TYPE)num; D = 1; }
+        Fract(const long int num)       { N = (TYPE)num; D = 1; }
+        Fract(const int num)            { N = (TYPE)num; D = 1; }
+        Fract(const short int num)      { N = (TYPE)num; D = 1; }
+
+        /** Casts **/
+        operator short int()      const { return N/D; }
+        operator int()            const { return N/D; }
+        operator long int()       const { return N/D; }
+        operator long long int()  const { return N/D; }
+
+        operator long double()    const { return ((long double)N)/((long double)D); }
+        operator double()         const { return ((double)N)/((double)D); }
+        operator float()          const { return ((float)N)/((float)D); }
 
         void operator=(const long double num)   { setFloat(num); }
-        void operator=(const long long num)     { N = (TYPE)num; D = 1; }
-        void operator=(const long int num)      { N = (TYPE)num; D = 1; }
         void operator=(const double num)        { setFloat(num); }
         void operator=(const float num)         { setFloat(num); }
+
+        void operator=(const short int num)     { N = (TYPE)num; D = 1; }
         void operator=(const int num)           { N = (TYPE)num; D = 1; }
+        void operator=(const long long int num) { N = (TYPE)num; D = 1; }
+        void operator=(const long int num)      { N = (TYPE)num; D = 1; }
 
         /** Operators **/
         Fract& operator++()
@@ -115,19 +120,19 @@ class Fract
 
         friend bool operator< (const Fract<TYPE> &a, const Fract<TYPE> &b)
         { return (a.N*b.D < a.D*b.N); }
-        
+
         friend bool operator>=(const Fract<TYPE> &a, const Fract<TYPE> &b)
         { return !(a < b); }
-        
+
         friend bool operator> (const Fract<TYPE> &a, const Fract<TYPE> &b)
         { return (b < a); }
-        
+
         friend bool operator<=(const Fract<TYPE> &a, const Fract<TYPE> &b)
         { return !(a > b); }
 
         friend bool operator==(const Fract<TYPE> &a, const Fract<TYPE> &b)
         { return (a.N*b.D == a.D*b.N); }
-        
+
         friend bool operator!=(const Fract<TYPE> &a, const Fract<TYPE> &b)
         { return !(a == b); }
 
@@ -147,7 +152,7 @@ class Fract
 
         /// Small enough to avoid overflows,
         /// enough factors to get good results
-        const TYPE AntiPrime = 5040
+        const TYPE AntiPrime = 5040;
         void setFloat(FPC num)
         {
             N = (TYPE)(num * AntiPrime + 0.5); /// 0.5 makes the cast round
