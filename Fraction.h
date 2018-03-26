@@ -214,14 +214,11 @@ class Fract
             TYPE factor = GCD((N < 0) ? -N : N, D);
             N = N / factor; D = D / factor;
         }
-
-        /// Small enough to avoid overflows,
-        /// enough factors to get good results
-        const TYPE AntiPrime = 5040;
+    
         void setFloat(FPC num)
         {
-            N = (TYPE)(num * AntiPrime + 0.5); /// 0.5 makes the cast round
-            D = AntiPrime;
+            N = (TYPE)(num * 720720 + 0.5); /// 0.5 makes the cast round
+            D = 720720;
             simplify();
         }
 };
