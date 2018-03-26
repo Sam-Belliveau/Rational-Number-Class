@@ -1,6 +1,9 @@
 Rational Number Class
 =====================
 
+### We hope to become the standered for non-arbitrary precision rational numbers :)
+### Any contributions are welcome
+
 Operators so far:
 -----------------
 
