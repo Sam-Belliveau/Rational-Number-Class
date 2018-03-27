@@ -31,7 +31,14 @@
     ANY FLOAT IS NOT SUPPORTED BECAUSE THEY DO NOT HAVE THE MODULAR FUNCTION, THAT IS THE ONLY REASON.
  */
 
-typedef long double FPC; /// floating point calculator
+typedef union {
+  double f;
+  struct {
+    unsigned int mantisa : 54;
+    unsigned int exponent : 11;
+    unsigned int sign : 1;
+  } parts;
+} double_split;
 
 #ifndef FRACTION_H
 #define FRACTION_H
@@ -46,27 +53,20 @@ class Fract
 
         /** Constructors **/
         constexpr Fract(const TYPE topNum, const TYPE bottomNum) : N{topNum}, D{bottomNum} {}
-        constexpr Fract(const TYPE topNum): N{num}, D{1} {}
 
-        constexpr Fract(const long double num)    { setFloat(num); }
-        constexpr Fract(const double num)         { setFloat(num); }
-        constexpr Fract(const float num)          { setFloat(num); }
+        constexpr Fract(const TYPE topNum) : N{topNum}, D{1} {}
+        constexpr void operator=(const TYPE num)  { N = num; D = 1; }
 
-        /** Casts **/
-        explicit constexpr operator TYPE()  const { return N/D; }
+        constexpr Fract(const double num)          { setFloat(num); }
+        constexpr void operator=(const double num) { setFloat(num); }
+        constexpr Fract(const float num)           { setFloat(num); }
+        constexpr void operator=(const float num)  { setFloat(num); }
 
-        explicit constexpr operator long double()    const { return ((long double)N)/((long double)D); }
-        explicit constexpr operator double()         const { return ((double)N)/((double)D); }
-        explicit constexpr operator float()          const { return ((float)N)/((float)D); }
+        /* Casts */
 
-        constexpr void operator=(const long double num)   { setFloat(num); }
-        constexpr void operator=(const double num)        { setFloat(num); }
-        constexpr void operator=(const float num)         { setFloat(num); }
-
-        constexpr void operator=(const short int num)     { N = (TYPE)num; D = 1; }
-        constexpr void operator=(const int num)           { N = (TYPE)num; D = 1; }
-        constexpr void operator=(const long long int num) { N = (TYPE)num; D = 1; }
-        constexpr void operator=(const long int num)      { N = (TYPE)num; D = 1; }
+        explicit constexpr operator TYPE()   const { return N/D; }
+        explicit constexpr operator double() const { return ((double)N)/((double)D); }
+        explicit constexpr operator float()  const { return ((float)N) /((float)D) ; }
 
         /** Operators **/
         // Increment
@@ -211,20 +211,20 @@ class Fract
     private:
         /** Background work **/
         // Greatest Common Factor
-        inline TYPE GCD(const TYPE a, const TYPE b)
-        { return b == 0 ? GCD(b, a%b) : a; }
+        constexpr TYPE GCD(const TYPE a, const TYPE b)
+        { return b == 0 ? a : GCD(b, a%b); }
 
         // Simplify Fraction
-        void simplify()
+        constexpr void simplify()
         {
             if(D < 0){ D = -D; N = -N; } /// Numerator is what holds the sign
 
-            TYPE factor = GCD((N < 0) ? -N : N, D);
+            const TYPE factor = GCD((N < 0) ? -N : N, D);
             N = N / factor; D = D / factor;
         }
-    
+
         // Take Float And Inturpret It
-        void setFloat(FPC num)
+        constexpr void setFloat(double num)
         {
             N = (TYPE)(num * 720720 + 0.5); /// 0.5 makes the cast round
             D = 720720;
@@ -233,3 +233,4 @@ class Fract
 };
 
 #endif
+
