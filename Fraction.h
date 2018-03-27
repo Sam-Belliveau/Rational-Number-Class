@@ -45,16 +45,12 @@ class Fract
         TYPE D = 1;
 
         /** Constructors **/
-        constexpr Fract(TYPE topNum, TYPE bottomNum) : N{topNum}, D{bottomNum} {}
+        constexpr Fract(const TYPE topNum, const TYPE bottomNum) : N{topNum}, D{bottomNum} {}
+        constexpr Fract(const TYPE num): N{num}, D{1} {}
 
         constexpr Fract(const long double num)    { setFloat(num); }
         constexpr Fract(const double num)         { setFloat(num); }
         constexpr Fract(const float num)          { setFloat(num); }
-
-        constexpr Fract(const long long int num): N{(TYPE)num}, D{1} {}
-        constexpr Fract(const long int num)     : N{(TYPE)num}, D{1} {}
-        constexpr Fract(const int num)          : N{(TYPE)num}, D{1} {}
-        constexpr Fract(const short int num)    : N{(TYPE)num}, D{1} {}
 
         /** Casts **/
         explicit constexpr operator short int()      const { return N/D; }
