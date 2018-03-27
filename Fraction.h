@@ -76,6 +76,7 @@ class Fract
         constexpr void operator=(const long int num)      { N = (TYPE)num; D = 1; }
 
         /** Operators **/
+        // Increment
         constexpr Fract& operator++()
         {
             N = N + D;
@@ -89,6 +90,7 @@ class Fract
             return temp;
         }
 
+        // Decrement
         constexpr Fract& operator--()
         {
             N = N - D;
@@ -102,6 +104,7 @@ class Fract
             return temp;
         }
 
+        // Add
         constexpr Fract& operator+=(const Fract<TYPE> &b)
         {
             N = N*b.D + D*b.N;
@@ -116,6 +119,7 @@ class Fract
             return a;
         }
 
+        // Subtract
         constexpr Fract& operator-=(const Fract<TYPE> &b)
         {
             N = N*b.D - D*b.N;
@@ -130,6 +134,7 @@ class Fract
             return a;
         }
 
+        // Modulo
         constexpr Fract& operator%=(const Fract<TYPE> &b)
         {
             N = N*b.D % D*b.N;
@@ -144,6 +149,7 @@ class Fract
             return a;
         }
 
+        // Multpily
         constexpr Fract& operator*=(const Fract<TYPE> &b)
         {
             N = N * b.N;
@@ -158,6 +164,7 @@ class Fract
             return a;
         }
 
+        // Divide
         constexpr Fract& operator/=(const Fract<TYPE> &b)
         {
             N = N * b.D;
@@ -172,31 +179,37 @@ class Fract
             return a;
         }
 
+        // Less Than
         constexpr friend bool operator< (const Fract<TYPE> &a, const Fract<TYPE> &b)
         {
             return (a.N*b.D < a.D*b.N);
         }
 
+        // Greater Than Or Equal To
         constexpr friend bool operator>=(const Fract<TYPE> &a, const Fract<TYPE> &b)
         {
             return !(a < b);
         }
 
+        // Greater Than
         constexpr friend bool operator> (const Fract<TYPE> &a, const Fract<TYPE> &b)
         {
             return (b < a);
         }
 
+        // Less Than Or Equal To
         constexpr friend bool operator<=(const Fract<TYPE> &a, const Fract<TYPE> &b)
         {
             return !(a > b);
         }
 
+        // Equals
         constexpr friend bool operator==(const Fract<TYPE> &a, const Fract<TYPE> &b)
         {
             return (a.N*b.D == a.D*b.N);
         }
 
+        // Not Equals
         constexpr friend bool operator!=(const Fract<TYPE> &a, const Fract<TYPE> &b)
         {
             return !(a == b);
@@ -204,9 +217,11 @@ class Fract
 
     private:
         /** Background work **/
+        // Greatest Common Factor
         inline TYPE GCD(const TYPE a, const TYPE b)
-        { return b ? GCD(b, a%b) : a; }
+        { return b == 0 ? GCD(b, a%b) : a; }
 
+        // Simplify Fraction
         void simplify()
         {
             if(D < 0){ D = -D; N = -N; } /// Numerator is what holds the sign
@@ -215,6 +230,7 @@ class Fract
             N = N / factor; D = D / factor;
         }
     
+        // Take Float And Inturpret It
         void setFloat(FPC num)
         {
             N = (TYPE)(num * 720720 + 0.5); /// 0.5 makes the cast round
