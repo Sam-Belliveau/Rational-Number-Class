@@ -46,17 +46,14 @@ class Fract
 
         /** Constructors **/
         constexpr Fract(const TYPE topNum, const TYPE bottomNum) : N{topNum}, D{bottomNum} {}
-        constexpr Fract(const TYPE num): N{num}, D{1} {}
+        constexpr Fract(const TYPE topNum): N{num}, D{1} {}
 
         constexpr Fract(const long double num)    { setFloat(num); }
         constexpr Fract(const double num)         { setFloat(num); }
         constexpr Fract(const float num)          { setFloat(num); }
 
         /** Casts **/
-        explicit constexpr operator short int()      const { return N/D; }
-        explicit constexpr operator int()            const { return N/D; }
-        explicit constexpr operator long int()       const { return N/D; }
-        explicit constexpr operator long long int()  const { return N/D; }
+        explicit constexpr operator TYPE()  const { return N/D; }
 
         explicit constexpr operator long double()    const { return ((long double)N)/((long double)D); }
         explicit constexpr operator double()         const { return ((double)N)/((double)D); }
