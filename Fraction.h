@@ -32,17 +32,6 @@
     ANY FLOAT IS NOT SUPPORTED BECAUSE THEY DO NOT HAVE THE MODULAR FUNCTION, THAT IS THE ONLY REASON.
  */
 
-/*  FLOAT TO FRAC PROJECTS
-typedef union {
-  double f;
-  struct {
-    unsigned int mantisa : 54;
-    unsigned int exponent : 11;
-    unsigned int sign : 1;
-  } parts;
-} double_split;
-*/
-
 #ifndef FRACTION_H
 #define FRACTION_H
 #include <ostream>
