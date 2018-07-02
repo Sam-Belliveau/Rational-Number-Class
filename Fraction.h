@@ -24,8 +24,8 @@
 
 /*
     TEMPLATE SUPPORT:
-    char    (Not Recomended)    Because of overflow caused when using a double
-    short   (Not Recomended)    Because of overflow caused when using a double to a lesser extent
+    char    (Not Recomended)    The ostream capabilitys are broken.
+    short       (Useable)       The risk of overflow is high, but depending on your math, it should work just fine
     long        (Recomended)        This is the perfect size being 32 bits, you get a 64 bit data type
     long long   (Recomended)    This is 64bit so the risk of an overflow is very small, but you do have a 128 bit data type
 
