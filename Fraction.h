@@ -26,7 +26,7 @@
 #define FRACTION_H
 #include <ostream>
 
-template<typename TYPE, bool SAFE>
+template<typename TYPE, bool SAFE = true>
 class Fract
 {
     public:
