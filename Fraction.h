@@ -38,7 +38,7 @@ class Fract
         constexpr Fract(const TYPE topNum, const TYPE bottomNum) : N{topNum}, D{bottomNum} {}
     
         template<typename iTYPE>
-        constexpr Fract(const Fract<ITYPE> in) : N{static_cast<TYPE>(in.N)}, D{static_cast<TYPE>(in.D)} {}
+        constexpr Fract(const Fract<iTYPE> in) : N{static_cast<TYPE>(in.N)}, D{static_cast<TYPE>(in.D)} {}
 
         Fract() = default;
     
