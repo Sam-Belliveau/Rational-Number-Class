@@ -21,27 +21,6 @@
  * SOFTWARE.
  */
 
-/*
-    TEMPLATE SUPPORT:
-    char    (Not Recomended)    Because of overflow caused when using a double
-    short   (Not Recomended)    Because of overflow caused when using a double to a lesser extent
-    long        (Recomended)        This is the perfect size being 32 bits, you get a 64 bit data type
-    long long   (Recomended)    This is 64bit so the risk of an overflow is very small, but you do have a 128 bit data type
-
-    ANY FLOAT IS NOT SUPPORTED BECAUSE THEY DO NOT HAVE THE MODULAR FUNCTION, THAT IS THE ONLY REASON.
- */
-
-/*  FLOAT TO FRAC PROJECTS
-typedef union {
-  double f;
-  struct {
-    unsigned int mantisa : 54;
-    unsigned int exponent : 11;
-    unsigned int sign : 1;
-  } parts;
-} double_split;
-*/
-
 #ifndef FRACTION_H
 #define FRACTION_H
 
