@@ -22,16 +22,6 @@
  * SOFTWARE.
  */
 
-/*
-    TEMPLATE SUPPORT:
-    char    (Not Recomended)    The ostream capabilitys are broken.
-    short       (Useable)       The risk of overflow is high, but depending on your math, it should work just fine
-    long        (Recomended)        This is the perfect size being 32 bits, you get a 64 bit data type
-    long long   (Recomended)    This is 64bit so the risk of an overflow is very small, but you do have a 128 bit data type
-
-    ANY FLOAT IS NOT SUPPORTED BECAUSE THEY DO NOT HAVE THE MODULAR FUNCTION, THAT IS THE ONLY REASON.
- */
-
 #ifndef FRACTION_H
 #define FRACTION_H
 #include <ostream>
@@ -281,63 +271,3 @@ class Fract
 };
 
 #endif
-
-
-
-#ifndef FRACTION_H
-#define FRACTION_H
-#include <ostream>
-
-template<class T>
-class Fraction
-{
-public:
-  T N = 0, D = 1;
-
-  constexpr Fraction(const T n, const T d) : N{n}, D{d} {}
-
-  template<class NUM_T>
-  Fraction(const NUM_T num) { setNum(num); }
-
-  template<class NUM_T>
-  void operator=(const NUM_T num) { setNum(num); }
-
-  template<class NUM_T>
-  explicit constexpr operator NUM_T() const
-  { return NUM_T(N)/NUM_T(D); }
-
-
-  /** Operators **/
-  // Increment
-  constexpr Fraction& operator++()
-  {
-      N = N + D;
-      return *this;
-  }
-
-  constexpr Fraction operator++(int)
-  {
-      Fraction<T> temp(*this);
-      operator++();
-      return temp;
-  }
-
-  // Decrement
-  constexpr Fraction& operator--()
-  {
-      N = N - D;
-      return *this;
-  }
-
-  constexpr Fraction operator--(int)
-  {
-      Fraction<T> temp(*this);
-      operator--();
-      return temp;
-  }
-
-private:
-
-};
-
-#endif // FRACTION_H
