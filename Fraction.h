@@ -1,3 +1,4 @@
+
 /* MIT License
  *
  * Copyright (c) 2018 Samuel R. Belliveau
@@ -21,10 +22,21 @@
  * SOFTWARE.
  */
 
+/*
+    TEMPLATE SUPPORT:
+    char    (Not Recomended)    The ostream capabilitys are broken.
+    short       (Useable)       The risk of overflow is high, but depending on your math, it should work just fine
+    long        (Recomended)        This is the perfect size being 32 bits, you get a 64 bit data type
+    long long   (Recomended)    This is 64bit so the risk of an overflow is very small, but you do have a 128 bit data type
+
+    ANY FLOAT IS NOT SUPPORTED BECAUSE THEY DO NOT HAVE THE MODULAR FUNCTION, THAT IS THE ONLY REASON.
+ */
+
 #ifndef FRACTION_H
 #define FRACTION_H
+#include <ostream>
 
-template<typename TYPE>
+template<typename TYPE, bool SAFE>
 class Fract
 {
     public:
@@ -35,19 +47,15 @@ class Fract
         /** Constructors **/
         constexpr Fract(const TYPE topNum, const TYPE bottomNum) : N{topNum}, D{bottomNum} {}
 
-        constexpr Fract(const TYPE topNum) : N{topNum}, D{1} {}
-        constexpr void operator=(const TYPE num)  { N = num; D = 1; }
+        template<class NUM_T>
+        Fract(const NUM_T num) { setNum(num); }
 
-        constexpr Fract(const double num)          { setFloat(num); }
-        constexpr void operator=(const double num) { setFloat(num); }
-        constexpr Fract(const float num)           { setFloat(num); }
-        constexpr void operator=(const float num)  { setFloat(num); }
+        template<class NUM_T>
+        void operator=(const NUM_T num) { setNum(num); }
 
         /* Casts */
-
-        explicit constexpr operator TYPE()   const { return N/D; }
-        explicit constexpr operator double() const { return ((double)N)/((double)D); }
-        explicit constexpr operator float()  const { return ((float)N) /((float)D) ; }
+        template<class NUM_T>
+        explicit constexpr operator NUM_T() const { return NUM_T(N)/NUM_T(D); }
 
         /** Operators **/
         // Increment
@@ -59,7 +67,7 @@ class Fract
 
         constexpr Fract operator++(int)
         {
-            Fract<TYPE> temp(*this);
+            Fract<TYPE, SAFE> temp(*this);
             operator++();
             return temp;
         }
@@ -73,13 +81,13 @@ class Fract
 
         constexpr Fract operator--(int)
         {
-            Fract<TYPE> temp(*this);
+            Fract<TYPE, SAFE> temp(*this);
             operator--();
             return temp;
         }
 
         // Add
-        constexpr Fract& operator+=(const Fract<TYPE> &b)
+        constexpr Fract& operator+=(const Fract<TYPE, SAFE> &b)
         {
             N = N*b.D + D*b.N;
             D = D * b.D;
@@ -87,14 +95,14 @@ class Fract
             return *this;
         }
 
-        constexpr friend Fract operator+(Fract<TYPE> a, const Fract<TYPE> &b)
+        constexpr friend Fract operator+(Fract<TYPE, SAFE> a, const Fract<TYPE, SAFE> &b)
         {
             a += b;
             return a;
         }
 
         // Subtract
-        constexpr Fract& operator-=(const Fract<TYPE> &b)
+        constexpr Fract& operator-=(const Fract<TYPE, SAFE> &b)
         {
             N = N*b.D - D*b.N;
             D = D * b.D;
@@ -102,14 +110,14 @@ class Fract
             return *this;
         }
 
-        constexpr friend Fract operator-(Fract<TYPE> a, const Fract<TYPE> &b)
+        constexpr friend Fract operator-(Fract<TYPE, SAFE> a, const Fract<TYPE, SAFE> &b)
         {
             a -= b;
             return a;
         }
 
         // Modulo
-        constexpr Fract& operator%=(const Fract<TYPE> &b)
+        constexpr Fract& operator%=(const Fract<TYPE, SAFE> &b)
         {
             N = N*b.D % D*b.N;
             D = D * b.D;
@@ -117,14 +125,14 @@ class Fract
             return *this;
         }
 
-        constexpr friend Fract operator%(Fract<TYPE> a, const Fract<TYPE> &b)
+        constexpr friend Fract operator%(Fract<TYPE, SAFE> a, const Fract<TYPE, SAFE> &b)
         {
             a %= b;
             return a;
         }
 
         // Multpily
-        constexpr Fract& operator*=(const Fract<TYPE> &b)
+        constexpr Fract& operator*=(const Fract<TYPE, SAFE> &b)
         {
             N = N * b.N;
             D = D * b.D;
@@ -132,14 +140,14 @@ class Fract
             return *this;
         }
 
-        constexpr friend Fract operator*(Fract<TYPE> a, const Fract<TYPE> &b)
+        constexpr friend Fract operator*(Fract<TYPE, SAFE> a, const Fract<TYPE, SAFE> &b)
         {
             a *= b;
             return a;
         }
 
         // Divide
-        constexpr Fract& operator/=(const Fract<TYPE> &b)
+        constexpr Fract& operator/=(const Fract<TYPE, SAFE> &b)
         {
             N = N * b.D;
             D = D * b.N;
@@ -147,71 +155,184 @@ class Fract
             return *this;
         }
 
-        constexpr friend Fract operator/(Fract<TYPE> a, const Fract<TYPE> &b)
+        constexpr friend Fract operator/(Fract<TYPE, SAFE> a, const Fract<TYPE, SAFE> &b)
         {
             a /= b;
             return a;
         }
 
         // Less Than
-        constexpr friend bool operator< (const Fract<TYPE> &a, const Fract<TYPE> &b)
+        constexpr friend bool operator< (const Fract<TYPE, SAFE> &a, const Fract<TYPE, SAFE> &b)
         {
             return (a.N*b.D < a.D*b.N);
         }
 
         // Greater Than Or Equal To
-        constexpr friend bool operator>=(const Fract<TYPE> &a, const Fract<TYPE> &b)
+        constexpr friend bool operator>=(const Fract<TYPE, SAFE> &a, const Fract<TYPE, SAFE> &b)
         {
             return !(a < b);
         }
 
         // Greater Than
-        constexpr friend bool operator> (const Fract<TYPE> &a, const Fract<TYPE> &b)
+        constexpr friend bool operator> (const Fract<TYPE, SAFE> &a, const Fract<TYPE, SAFE> &b)
         {
             return (b < a);
         }
 
         // Less Than Or Equal To
-        constexpr friend bool operator<=(const Fract<TYPE> &a, const Fract<TYPE> &b)
+        constexpr friend bool operator<=(const Fract<TYPE, SAFE> &a, const Fract<TYPE, SAFE> &b)
         {
             return !(a > b);
         }
 
         // Equals
-        constexpr friend bool operator==(const Fract<TYPE> &a, const Fract<TYPE> &b)
+        constexpr friend bool operator==(const Fract<TYPE, SAFE> &a, const Fract<TYPE, SAFE> &b)
         {
             return (a.N*b.D == a.D*b.N);
         }
 
         // Not Equals
-        constexpr friend bool operator!=(const Fract<TYPE> &a, const Fract<TYPE> &b)
+        constexpr friend bool operator!=(const Fract<TYPE, SAFE> &a, const Fract<TYPE, SAFE> &b)
         {
             return !(a == b);
+        }
+
+        // Simplify Fraction
+        constexpr void simplify()
+        {
+          #if safe
+            if(D < 0){ D = -D; N = -N; } /// Numerator is what holds the sign
+            const TYPE factor = GCD((N < 0) ? -N : N, D);
+            N = N / factor; D = D / factor;
+          #endif
+        }
+
+        template<class NUM_T>
+        friend std::ostream& operator<<(std::ostream& os, const Fract<NUM_T, SAFE>& dt)
+        {
+          os << dt.N << "/" << dt.D;
+          return os;
         }
 
     private:
         /** Background work **/
         // Greatest Common Factor
-        constexpr TYPE GCD(const TYPE a, const TYPE b)
+        constexpr TYPE GCD(const TYPE a, const TYPE b) const
         { return b == 0 ? a : GCD(b, a%b); }
 
-        // Simplify Fraction
-        constexpr void simplify()
+        // Fucking ingenious work by me
+        template<class NUM_T>
+        void setNum(NUM_T num)
         {
-            if(D < 0){ D = -D; N = -N; } /// Numerator is what holds the sign
+          const bool negitive = num < 0;
+          if(negitive){ num = -num; }
 
-            const TYPE factor = GCD((N < 0) ? -N : N, D);
-            N = N / factor; D = D / factor;
-        }
+          #define MAX_ITER 4 // Iterations
 
-        // Take Float And Inturpret It
-        constexpr void setFloat(double num)
-        {
-            N = (TYPE)(num * 720720 + 0.5); /// 0.5 makes the cast round
-            D = 720720;
-            simplify();
+          /*
+           * GOING THROUGH ALL THIS EFFORT BECAUSE MAYBE
+           * SOME DAY I MIGHT WANT TO USE A CHAR FOR A
+           * FOR FUCK ALL REASONS
+           */
+          #define issigned(t) (((t)(-1)) < ((t) 0))
+          #define umaxof(t) (((0x1ULL << ((sizeof(t) * 8ULL) - 1ULL)) - 1ULL) | \
+                              (0xFULL << ((sizeof(t) * 8ULL) - 4ULL)))
+          #define smaxof(t) (((0x1ULL << ((sizeof(t) * 8ULL) - 1ULL)) - 1ULL) | \
+                              (0x7ULL << ((sizeof(t) * 8ULL) - 4ULL)))
+          #define maxof(t) ((unsigned long long) (issigned(t) ? smaxof(t) : umaxof(t)))
+          #define MAX_DETAIL maxof(TYPE) // Maximum amount of precision before the data becomes useless
+
+          TYPE iter = MAX_ITER, CFL[MAX_ITER]; // Continued Fraction List
+
+          CFL[0] = TYPE(num);
+          if(num == NUM_T(TYPE(num)))
+          { N = num; D = 1; return; }
+          num -= CFL[0];
+
+          // Finding Numbers for List
+          for(TYPE i = 1; i < iter; i++)
+          {
+            num = (num > 0) ? (1/num) : (-1/num);
+
+            if(num > MAX_DETAIL)
+            { iter = i; break; }
+
+            CFL[i] = TYPE(num);
+            num -= CFL[i];
+          }
+
+          // Solving Continued Fraction
+          N = 0; D = 1;
+          for(TYPE i = iter; i >= 0; i--)
+          {
+            TYPE nN = CFL[i] * N + D;
+            D = N; N = nN;
+            if(i == 0) { break; }
+          }
+
+          if(negitive){ N = -N; }
+          return;
         }
 };
 
 #endif
 
+
+
+#ifndef FRACTION_H
+#define FRACTION_H
+#include <ostream>
+
+template<class T>
+class Fraction
+{
+public:
+  T N = 0, D = 1;
+
+  constexpr Fraction(const T n, const T d) : N{n}, D{d} {}
+
+  template<class NUM_T>
+  Fraction(const NUM_T num) { setNum(num); }
+
+  template<class NUM_T>
+  void operator=(const NUM_T num) { setNum(num); }
+
+  template<class NUM_T>
+  explicit constexpr operator NUM_T() const
+  { return NUM_T(N)/NUM_T(D); }
+
+
+  /** Operators **/
+  // Increment
+  constexpr Fraction& operator++()
+  {
+      N = N + D;
+      return *this;
+  }
+
+  constexpr Fraction operator++(int)
+  {
+      Fraction<T> temp(*this);
+      operator++();
+      return temp;
+  }
+
+  // Decrement
+  constexpr Fraction& operator--()
+  {
+      N = N - D;
+      return *this;
+  }
+
+  constexpr Fraction operator--(int)
+  {
+      Fraction<T> temp(*this);
+      operator--();
+      return temp;
+  }
+
+private:
+
+};
+
+#endif // FRACTION_H
