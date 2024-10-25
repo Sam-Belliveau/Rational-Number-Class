@@ -226,8 +226,7 @@ class Fract
 
           /*
            * GOING THROUGH ALL THIS EFFORT BECAUSE MAYBE
-           * SOME DAY I MIGHT WANT TO USE A CHAR FOR A
-           * FOR F*CK ALL REASONS <-- (future me, i dont approve of this :()
+           * SOME DAY I MIGHT WANT TO USE A CHAR
            */
           #define issigned(t) (((t)(-1)) < ((t) 0))
           #define umaxof(t) (((0x1ULL << ((sizeof(t) * 8ULL) - 1ULL)) - 1ULL) | \
